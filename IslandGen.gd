@@ -9,9 +9,9 @@ func generate_islandmap(xSize, ySize, TileArray):
 	
 	var noise = OpenSimplexNoise.new()
 	noise.seed = randi()
-	noise.octaves = 3
-	noise.period = 20.0
-	noise.persistence = 0.8
+	noise.octaves = 4
+	noise.period = 50.0
+	noise.persistence = 2.0
 	
 	var xmin = xSize
 	var ymin = ySize

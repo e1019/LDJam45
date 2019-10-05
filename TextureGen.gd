@@ -16,7 +16,9 @@ var algo = {
 		random_burn = 3,
 		burn_mult = 1,
 		random_hue_p = 8,
-		random_hue_g = 25
+		random_hue_g = 25,
+		outlinetr = 0.2,
+		outlinebl = 0
 	},
 	"Grass": {
 		base_color = Color(0.0/255.0, 173.0/255.0, 95.0/255.0, 1.0),
@@ -25,7 +27,9 @@ var algo = {
 		random_burn = 2,
 		burn_mult = 0.4,
 		random_hue_p = 16,
-		random_hue_g = 40
+		random_hue_g = 40,
+		outlinetr = 0.2,
+		outlinebl = 0
 	}
 }
 
@@ -44,8 +48,13 @@ func generate_texture(img: Image, gen_type):
 	
 	for x in range(img_size):
 		for y in range(img_size):
+			var isOutlinebl = (x == 0) or (y == 0)
+			var isOutlinetr = (x == img_size-1) or (y == img_size-1)
+			var outl = algodat.get("outlinetr", 0) if isOutlinetr else 0
+			outl += algodat.get("outlinebl", 0) if isOutlinebl else 0
 			var comput_col: Color = base_col
 			comput_col.h += (randf() - 0.5) * (algodat.get("random_hue_p", 0)/360.0)
+			comput_col = comput_col.lightened(-outl).darkened(outl/4.0)
 			var dodge = algodat.get("dodge_mult", 0)
 			var burn = algodat.get("burn_mult", 0)
 			for i in range(algodat.get("random_dodge", 0)):
@@ -59,8 +68,6 @@ func generate_texture(img: Image, gen_type):
 
 func _ready():
 	for v in tgt_gens:
-
-		
 		if(not has_node(v)):
 			var img = Image.new()
 			img.create(img_size, img_size, false, Image.FORMAT_RGBA8)

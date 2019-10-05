@@ -50,6 +50,8 @@ func _ready():
 		for y in range(islandSizeY):
 			var idx = $IslandGen.pack(x, y, islandSizeX, islandSizeY)
 			set_cell(x - islandSizeX/2, y - islandSizeY/2, map[idx])
+	
+	$WorldOverlay.gen_overlay()
 
 func getLimits():
 	return [Vector2(xmin, ymin), Vector2(xmax, ymax)]

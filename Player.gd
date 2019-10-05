@@ -8,7 +8,7 @@ func _process(delta):
 	if(dead):
 		return
 	
-	var limits = owner.get_node("WorldTiles").getLimits()
+	var limits = owner.get_node("WorldTerrain").getLimits()
 	
 	var down = Input.get_action_strength("move_down")
 	var up = Input.get_action_strength("move_up")

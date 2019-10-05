@@ -28,7 +28,7 @@ func _ready():
 	update_hp()
 	
 	$VisiblePlayer/Camera2D.make_current()
-	worldTiles = get_parent().get_node("WorldTiles")
+	worldTiles = get_parent().get_node("WorldTerrain")
 	find_spawn_pos()
 
 
