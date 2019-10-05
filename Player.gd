@@ -1,7 +1,12 @@
 extends Node2D
 
+var dead = false
+
+var speed = 1
 
 func _process(delta):
+	if(dead):
+		return
 	
 	var limits = owner.get_node("WorldTiles").getLimits()
 	
@@ -14,10 +19,12 @@ func _process(delta):
 	if(velocity.length() > 1):
 		velocity /= velocity.length()
 	
-	velocity *= 60*delta
-	
-	print(limits[0], limits[1])
+	velocity *= 60*delta*speed
 	
 	translate(velocity)
 	
 	position = Vector2(clamp(position.x, limits[0].x, limits[1].x), clamp(position.y, limits[0].y, limits[1].y))
+	
+
+func die():
+	dead = true

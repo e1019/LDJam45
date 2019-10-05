@@ -14,14 +14,18 @@ var algo = {
 		random_dodge = 6,
 		dodge_mult = 3,
 		random_burn = 3,
-		burn_mult = 1
+		burn_mult = 1,
+		random_hue_p = 8,
+		random_hue_g = 25
 	},
 	"Grass": {
 		base_color = Color(0.0/255.0, 173.0/255.0, 95.0/255.0, 1.0),
 		random_dodge = 4,
 		dodge_mult = 0.6,
 		random_burn = 2,
-		burn_mult = 0.4
+		burn_mult = 0.4,
+		random_hue_p = 16,
+		random_hue_g = 40
 	}
 }
 
@@ -34,9 +38,14 @@ func generate_texture(img: Image, gen_type):
 	var algodat = algo[gen_type]
 	
 	img.lock()
+	
+	var base_col:Color = algodat["base_color"]
+	base_col.h += (randf() - 0.5) * (algodat.get("random_hue_g", 0)/360.0)
+	
 	for x in range(img_size):
 		for y in range(img_size):
-			var comput_col: Color = algodat["base_color"]
+			var comput_col: Color = base_col
+			comput_col.h += (randf() - 0.5) * (algodat.get("random_hue_p", 0)/360.0)
 			var dodge = algodat.get("dodge_mult", 0)
 			var burn = algodat.get("burn_mult", 0)
 			for i in range(algodat.get("random_dodge", 0)):
