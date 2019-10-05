@@ -14,6 +14,8 @@ func _process(delta):
 	if(velocity.length() > 1):
 		velocity /= velocity.length()
 	
+	velocity *= 60*delta
+	
 	print(limits[0], limits[1])
 	
 	translate(velocity)

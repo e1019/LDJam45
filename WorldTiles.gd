@@ -41,12 +41,10 @@ func _ready():
 	
 	var map = mapdata[0]
 	
-	xmin = map[1]
-	ymin = map[2]
-	xmax = map[3]
-	ymax = map[4]
-	
-	print("limits", xmin, ymin, xmax, ymax)
+	xmin = (mapdata[1] - islandSizeX/2 - 2) * t_size
+	ymin = (mapdata[2] - islandSizeY/2 - 2) * t_size
+	xmax = (mapdata[3] - islandSizeX/2 + 2) * t_size
+	ymax = (mapdata[4] - islandSizeY/2 + 2) * t_size
 	
 	for x in range(islandSizeX):
 		for y in range(islandSizeY):
