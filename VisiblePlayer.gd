@@ -4,7 +4,9 @@ var MovingPlayer:Node2D
 
 
 
-#func _ready():
+func _ready():
+	var tex = $PlayerGen.generate()
+	texture = tex
 
 
 #func _process(delta):
