@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://WorldTiles.gd" type="Script" id=1]
+[ext_resource path="res://TextureGen.gd" type="Script" id=2]
+[ext_resource path="res://Water.gd" type="Script" id=3]
+[ext_resource path="res://IslandGen.gd" type="Script" id=4]
+[ext_resource path="res://Player.gd" type="Script" id=5]
+[ext_resource path="res://VisiblePlayer.gd" type="Script" id=6]
+
+[sub_resource type="NoiseTexture" id=1]
+width = 8
+height = 8
+
+[node name="Node2D" type="Node2D"]
+scale = Vector2( 6, 6 )
+
+[node name="WorldTiles" type="TileMap" parent="."]
+cell_size = Vector2( 1, 1 )
+format = 1
+script = ExtResource( 1 )
+
+[node name="TextureGen" type="Node" parent="WorldTiles"]
+script = ExtResource( 2 )
+
+[node name="Water" type="Node" parent="WorldTiles/TextureGen"]
+script = ExtResource( 3 )
+
+[node name="IslandGen" type="Node" parent="WorldTiles"]
+script = ExtResource( 4 )
+
+[node name="LocalPlayer" type="Node2D" parent="."]
+
+[node name="Mover" type="Node2D" parent="LocalPlayer"]
+script = ExtResource( 5 )
+
+[node name="VisiblePlayer" type="Sprite" parent="LocalPlayer"]
+texture = SubResource( 1 )
+script = ExtResource( 6 )
+
+[node name="Camera2D" type="Camera2D" parent="LocalPlayer/VisiblePlayer"]
+smoothing_enabled = true
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
