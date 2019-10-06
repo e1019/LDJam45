@@ -11,7 +11,7 @@ var floorpos = Vector2(0, 0)
 
 func update_pos():
 	floorpos = (($Mover.position/8).floor() * 8)
-	$VisiblePlayer.position = $Mover.position
+	$VisiblePlayer.position = floorpos#$Mover.position
 
 
 
@@ -48,6 +48,7 @@ func setHealth(hp: int):
 		print("We dead")
 		$Mover.die()
 		$LocalUI.die()
+		$VisiblePlayer.die()
 
 func setMaxHealth(maxhp: int):
 	max_health = max(0, maxhp)

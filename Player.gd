@@ -25,6 +25,8 @@ func _process(delta):
 	
 	position = Vector2(clamp(position.x, limits[0].x, limits[1].x), clamp(position.y, limits[0].y, limits[1].y))
 	
+	
+	get_parent().get_node("VisiblePlayer").on_move(up, left, down, right)
 
 func die():
 	dead = true

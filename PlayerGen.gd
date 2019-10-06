@@ -139,14 +139,64 @@ func generate():
 				elif(ch == "?"):
 					img.set_pixel(x+1, y, hat_shade if rando else hat)
 			y += 1
+		
 	
+	var bw_img = Image.new()
+	bw_img.create_from_data(10, 10, false, Image.FORMAT_RGBA8, img.get_data())
+	bw_img.lock()
+	
+	## create forward texture
 	# put eyes
-	img.set_pixel(3, 3, Color3(0,0,0))
-	img.set_pixel(3, 4, Color3(0,0,0))
-	img.set_pixel(6, 3, Color3(0,0,0))
-	img.set_pixel(6, 4, Color3(0,0,0))
+	var fw_img = Image.new()
+	fw_img.create_from_data(10, 10, false, Image.FORMAT_RGBA8, img.get_data())
+	fw_img.lock()
 	
-	var imgtex = ImageTexture.new()
-	imgtex.create_from_image(img, 0)
+	fw_img.set_pixel(3, 3, Color3(0,0,0))
+	fw_img.set_pixel(3, 4, Color3(0,0,0))
+	fw_img.set_pixel(6, 3, Color3(0,0,0))
+	fw_img.set_pixel(6, 4, Color3(0,0,0))
 	
-	return imgtex
+	## create left texture
+	# reput eyes
+	var lf_img = Image.new()
+	lf_img.create_from_data(10, 10, false, Image.FORMAT_RGBA8, img.get_data())
+	lf_img.lock()
+	
+	lf_img.set_pixel(3-1, 3, Color3(0,0,0))
+	lf_img.set_pixel(3-1, 4, Color3(0,0,0))
+	lf_img.set_pixel(6-1, 3, Color3(0,0,0))
+	lf_img.set_pixel(6-1, 4, Color3(0,0,0))
+	
+	
+	## create right texture
+	# reput eyes
+	var rt_img = Image.new()
+	rt_img.create_from_data(10, 10, false, Image.FORMAT_RGBA8, img.get_data())
+	rt_img.lock()
+	
+	rt_img.set_pixel(3+1, 3, Color3(0,0,0))
+	rt_img.set_pixel(3+1, 4, Color3(0,0,0))
+	rt_img.set_pixel(6+1, 3, Color3(0,0,0))
+	rt_img.set_pixel(6+1, 4, Color3(0,0,0))
+	
+	var textures = []
+	textures.resize(4)
+	var k = 0
+	for v in [fw_img, lf_img, bw_img, rt_img]:
+		var idle_tex = ImageTexture.new()
+		idle_tex.create_from_image(v, 0)
+		
+		v.set_pixel(3, 9, Color(0, 0, 0, 0))
+		var walking0_tex = ImageTexture.new()
+		walking0_tex.create_from_image(v, 0)
+		
+		v.set_pixel(3, 9, shoes)
+		v.set_pixel(6, 9, Color(0, 0, 0, 0))
+		var walking1_tex = ImageTexture.new()
+		walking1_tex.create_from_image(v, 0)
+		
+		textures[k] = [idle_tex, walking0_tex, walking1_tex]
+		
+		k += 1
+	
+	return textures
