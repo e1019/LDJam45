@@ -53,8 +53,6 @@ script = ExtResource( 3 )
 script = ExtResource( 4 )
 
 [node name="WorldOverlay" type="TileMap" parent="WorldTerrain"]
-z_index = 2
-z_as_relative = false
 cell_quadrant_size = 4
 format = 1
 script = ExtResource( 5 )

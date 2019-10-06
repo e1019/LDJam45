@@ -36,14 +36,18 @@ func on_move(w, a, s, d):
 	
 	walking_counter += dist
 	
-	if(walking_counter > 6):
+	var isInWater = get_parent().get_under_tile() == 0
+	
+	if((walking_counter > 6) and not isInWater):
 		walking_idx += 1
 		walking_counter = 0
 		play_walk()
 	
 	walking_idx = walking_idx % 2
 	
-	texture = tex_base[(1 + walking_idx) if dist > 0 else 0]
+	
+	
+	texture = tex_base[3 if isInWater else ((1 + walking_idx) if dist > 0 else 0)]
 	
 
 

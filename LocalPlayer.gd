@@ -4,18 +4,40 @@ var health: int
 var max_health: int
 
 var worldTiles: TileMap
+var overlayTiles: TileMap
 
 var dead = false
 
 var floorpos = Vector2(0, 0)
+var prev_floorpos = Vector2(0, 0)
+
+func get_under_overlay_tile():
+	var csfloorpos = (($Mover.position/16).floor() * 16)
+	return overlayTiles.get_cellv(csfloorpos/overlayTiles.cell_size)
+
+func collide():
+	var under_tile = get_under_overlay_tile()
+	if(under_tile != -1):
+		if(floorpos != prev_floorpos):
+			floorpos = prev_floorpos
+		else:
+			while(get_under_overlay_tile() != -1):
+				floorpos -= Vector2(0, 1)
+		
+		$Mover.position = floorpos
+	
+	prev_floorpos = floorpos
 
 func update_pos():
 	floorpos = (($Mover.position/8).floor() * 8)
+	collide()
 	$VisiblePlayer.position = floorpos#$Mover.position
 
 
 
 func get_under_tile():
+	if(worldTiles == null):
+		return -1
 	return worldTiles.get_cellv(floorpos/worldTiles.cell_size)
 
 func find_spawn_pos():
@@ -32,6 +54,7 @@ func _ready():
 	
 	$VisiblePlayer/Camera2D.make_current()
 	worldTiles = get_parent().get_node("WorldTerrain")
+	overlayTiles = worldTiles.get_node("WorldOverlay")
 	find_spawn_pos()
 
 

@@ -62,10 +62,17 @@ func generate_texture(img: Image, gen_type):
 	noisegen.period = algodat.get("noisePer", 50.0)
 	noisegen.persistence = algodat.get("noisePers", 0.5)
 	
+	
 	img.lock()
+	
 	
 	var base_col:Color = algodat["base_color"]
 	base_col.h += (randf() - 0.5) * (algodat.get("random_hue_g", 0)/360.0)
+	
+	var xmin = img_size
+	var ymin = img_size
+	var xmax = 0
+	var ymax = 0
 	
 	for x in range(img_size):
 		for y in range(img_size):
@@ -122,7 +129,20 @@ func generate_texture(img: Image, gen_type):
 			
 			out_col.h += (randf() - 0.5) * (algodat.get("random_hue_p", 0)/360.0)
 			
-			img.set_pixel(x, y, out_col)
+			if(out_col.a > 0):
+				xmin = min(x, xmin)
+				ymin = min(y, ymin)
+				xmax = max(x, xmax)
+				ymax = max(y, ymax)
+				img.set_pixel(x, y, out_col)
+			
+			
+	
+	# avoid generating textures too small
+	var dx = xmax-xmin
+	var dy = ymax-ymin
+	if((dx*dy) < ((img_size/3)*(img_size/3))):
+		return generate_texture(img, gen_type)
 	img.unlock()
 
 func _ready():
@@ -132,6 +152,7 @@ func _ready():
 		
 		var img = Image.new()
 		img.create(img_size, img_size, false, Image.FORMAT_RGBA8)
+		img.fill(Color(0, 0, 0, 0))
 		images[v] = img
 		
 		textures[v] = []

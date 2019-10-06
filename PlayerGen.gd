@@ -100,9 +100,9 @@ func generate():
 			]
 		else:
 			hair_data = [
-				".#@@#@@.",
-				"@#@##@##",
-				"@@@#@@#@",
+				"..@@#@..",
+				".#@##@#.",
+				".@@#@@#.",
 				"/....../"
 			]
 		var y = 0
@@ -195,7 +195,16 @@ func generate():
 		var walking1_tex = ImageTexture.new()
 		walking1_tex.create_from_image(v, 0)
 		
-		textures[k] = [idle_tex, walking0_tex, walking1_tex]
+		v.set_pixel(3, 9, Color(0,0,0,0))
+		for x in range(4):
+			v.set_pixel(x+3, 8, Color(0,0,0,0))
+		
+		var swimming0_tex = ImageTexture.new()
+		swimming0_tex.create_from_image(v, 0)
+		
+		
+		
+		textures[k] = [idle_tex, walking0_tex, walking1_tex, swimming0_tex]
 		
 		k += 1
 	
