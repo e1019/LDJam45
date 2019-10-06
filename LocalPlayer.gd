@@ -47,8 +47,6 @@ func place_wood():
 	return false
 
 func cut_wood():
-	if(logs == maxlogs):
-		return false
 	
 	var tries = [
 		Vector2(0, 0),
@@ -60,10 +58,22 @@ func cut_wood():
 	
 	for x in tries:
 		if(get_under_overlay_tile_offset(x) > 9):
+			if(logs == maxlogs):
+				continue
 			var overpos = get_overlay_pos(x)
 			overlayTiles.set_cellv(overpos, -1)
 			logs = clamp(logs + 3, 0, maxlogs)
 			$LocalUI/WoodIndicator.onWoodChanged(logs, maxlogs)
+			return true
+		elif(get_under_overlay_tile_offset(x) > -1):
+			if(logs < 2):
+				continue
+			var overpos = get_overlay_pos(x)
+			overlayTiles.set_cellv(overpos, -1)
+			logs = clamp(logs -2, 0, maxlogs)
+			health = clamp(health + 1, 0, max_health)
+			$LocalUI/WoodIndicator.onWoodChanged(logs, maxlogs)
+			update_hp()
 			return true
 	return false
 
@@ -75,6 +85,7 @@ func collide():
 		else:
 			while(get_under_overlay_tile() != -1):
 				floorpos -= Vector2(0, 1)
+				$Mover.position = floorpos
 		
 		$Mover.position = floorpos
 	
@@ -139,6 +150,8 @@ func setMaxHealth(maxhp: int):
 var water_timer = 0.0
 
 func _process(dt):
+	if dead:
+		return
 	if(get_under_tile() == 0):
 		water_timer += dt
 		if(water_timer > 1):

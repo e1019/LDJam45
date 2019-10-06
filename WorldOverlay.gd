@@ -30,7 +30,7 @@ func gen_overlay():
 	var szx = get_parent().islandSizeX
 	var szy = get_parent().islandSizeY
 	
-	for i in range(szx * (szy/24)):
+	for i in range(szx * (szy/16)):
 		var x = randi() % (szx/2) - (szx/4)
 		var y = randi() % (szy/2) - (szy/4)
 		

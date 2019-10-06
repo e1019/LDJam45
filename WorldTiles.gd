@@ -13,7 +13,7 @@ var xmax: int
 var ymax: int
 
 var islandSizeX = 256
-var islandSizeY = 32
+var islandSizeY = 256
 
 func _ready():
 	tileset = TileSet.new()

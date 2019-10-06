@@ -14,5 +14,5 @@ func die():
 func _process(dt):
 	if(dead):
 		dead_time += dt
-		if(dead_time > 10):
+		if(dead_time > 6):
 			get_tree().reload_current_scene()
