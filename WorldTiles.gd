@@ -12,6 +12,9 @@ var ymin: int
 var xmax: int
 var ymax: int
 
+var islandSizeX = 256
+var islandSizeY = 32
+
 func _ready():
 	tileset = TileSet.new()
 	var t_size = $TextureGen.get_texture_size()
@@ -34,8 +37,7 @@ func _ready():
 	
 	tile_set = tileset
 	
-	var islandSizeX = 256
-	var islandSizeY = 256
+
 	
 	var mapdata = $IslandGen.generate_islandmap(islandSizeX, islandSizeY, TileArray)
 	
@@ -45,6 +47,10 @@ func _ready():
 	ymin = (mapdata[2] - islandSizeY/2 - 2) * t_size
 	xmax = (mapdata[3] - islandSizeX/2 + 2) * t_size
 	ymax = (mapdata[4] - islandSizeY/2 + 2) * t_size
+	
+	for x in range(islandSizeX*2):
+		for y in range(islandSizeY*2):
+			set_cell(x - islandSizeX, y - islandSizeY, 0)
 	
 	for x in range(islandSizeX):
 		for y in range(islandSizeY):

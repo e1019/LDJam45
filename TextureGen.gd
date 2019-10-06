@@ -5,7 +5,7 @@ const img_size = 8
 var textures = {}
 var images = {}
 
-var tgt_gens = ["Water", "Sand", "Grass"]
+var tgt_gens = ["Water", "Sand", "Grass", "Wood"]
 
 
 var algo = {
@@ -22,6 +22,17 @@ var algo = {
 	},
 	"Grass": {
 		base_color = Color(0.0/255.0, 173.0/255.0, 95.0/255.0, 1.0),
+		random_dodge = 4,
+		dodge_mult = 0.6,
+		random_burn = 2,
+		burn_mult = 0.4,
+		random_hue_p = 16,
+		random_hue_g = 40,
+		outlinetr = 0.2,
+		outlinebl = 0
+	},
+	"Wood": {
+		base_color = Color(88.0/255.0, 63.0/255.0, 48.0/255.0, 1.0),
 		random_dodge = 4,
 		dodge_mult = 0.6,
 		random_burn = 2,

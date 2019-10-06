@@ -27,9 +27,12 @@ func gen_overlay():
 	tile_set = tileset
 	cell_size = Vector2(t_size, t_size)
 	
-	for i in range(256 * 4):
-		var x = randi() % 128 - 64
-		var y = randi() % 128 - 64
+	var szx = get_parent().islandSizeX
+	var szy = get_parent().islandSizeY
+	
+	for i in range(szx * (szy/24)):
+		var x = randi() % (szx/2) - (szx/4)
+		var y = randi() % (szy/2) - (szy/4)
 		
 		var cell = get_parent().get_cell(x*2, y*2)
 		if(cell != get_parent().get_cell((x*2)+1, y*2)):
